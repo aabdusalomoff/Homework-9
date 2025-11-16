@@ -44,13 +44,13 @@
             <div class="detail_card">
                 <h2><b>{{ todo.title }}</b></h2>
                 <hr />
-                <h4><b>Tavsif:</b></h4>
+                <h4><b>Description:</b></h4>
                 <p>{{ todo.desc }}</p>
                 <hr />
                 <h4><b>Status:</b></h4>
                 <p>{{ todo.get_status_display }}</p>
                 <hr />
-                <h4><b>Yaratilgan sana:</b></h4>
+                <h4><b>Created at:</b></h4>
                 <p>{{ todo.created_at|date:"d-m-Y H:i" }}</p>
                 <br />
                 <center>
