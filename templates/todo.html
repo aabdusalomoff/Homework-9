@@ -11,36 +11,39 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!--style-->
   <style>
-  .card {
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5),
+        0 6px 20px 0 rgba(0, 0, 0, 0.39);
+      background: DarkOrange;
+      margin-bottom: 5%;
+      border-radius: 25px;
+      padding: 2%;
+      overflow: auto;
+      resize: both;
+      text-overflow: ellipsis;
+    }
 
-   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5),
-               0 6px 20px 0 rgba(0,0,0,0.39);
-   background: DarkOrange;
-   margin-bottom : 5%;
-   border-radius: 25px;
-   padding : 2%;
-   overflow: auto;
-   resize: both;
-   text-overflow: ellipsis;
-  }
-  .card:hover{
-    background: lightblue;
-  }
+    .card:hover {
+      background: lightblue;
+    }
 
-  .submit_form{
+    .submit_form {
+      text-align: center;
+      padding: 3%;
+      background: DarkOrange;
+      border-radius: 25px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4),
+        0 6px 20px 0 rgba(0, 0, 0, 0.36);
+    }
 
-    text-align: center;
-    padding: 3%;
-    background: DarkOrange;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4),
-                0 6px 20px 0 rgba(0,0,0,0.36);
-  }
+    .btn-card {
+      margin-left: 5px;
+    }
   </style>
 
 </head>
 
-<body  class="container-fluid">
+<body class="container-fluid">
 
   <center class="row">
     <h1><i>Kundalik ishlar</i></h1>
@@ -50,30 +53,63 @@
   <div class="row">
 
     <div class="col-md-8">
+      {% for todo in todos %}
       <div class="card">
-        <center><b>Title of the todo</b></center>
-        <hr/>
-        Todo time
-        <hr/>
-        Todo description
-        <hr/>
-        Todo status
+        <center><b>{{ todo.title }}</b></center>
+        <hr />
+        {{ todo.desc|truncatewords:20 }}
+        <hr />
+        {{ todo.get_status_display }}
+        <hr />
+        Date: {{ todo.created_at|date:"d-m-Y" }}
         <br />
-        <button class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-trash"></span><a href="#">O'chirish</a></button>
+        <div style="float: right;">
+          <button class="btn btn-info btn-card">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <a href="/detail/{{todo.id}}" style="color: white; text-decoration: none;">&nbsp;Batafsil</a>
+          </button>
+          <button class="btn btn-warning btn-card">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <a href="/edit/{{todo.id}}" style="color: white; text-decoration: none;">&nbsp;Tahrirlash</a>
+          </button>
+          <button class="btn btn-danger btn-card">
+            <span class="glyphicon glyphicon-trash"></span>
+            <a href="/delete/{{todo.id}}" style="color: white; text-decoration: none;">&nbsp;O'chirish</a>
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="col-md-1"> </div>
+
+    <div class="col-md-3">
+      <div class="submit_form">
+        <form action="/" method="post">{% csrf_token %}
+          <label for="">Title</label>
+          <input type="text" name="title" placeholder="Title kiriting" class="form-control" required>
+          <br />
+          <label for="">Desc</label>
+          <textarea name="description" class="form-control" required></textarea> <br>
+          <br />
+          <label for="">Status</label><br>
+          <select name="status" class="form-control" required>
+            <option value="new">New</option>
+            <option value="in_progress">In Progess</option>
+            <option value="done">Done</option>
+          </select> <br>
+          <br />
+          <br>
+          <center>
+            <button type="submit" class="btn btn-default">Topshirish</button>
+          </center>
+        </form>
+
+
       </div>
     </div>
-    <div class="col-md-1"> </div>
-    <div class="col-md-3" >
-      <div  class="submit_form">
-      <form action="#" >
-        <input type="text" name="task">
-        <center>
-        <button type="submit" class="btn btn-default">Topshirish</button>
-      </center>
-      </form>
-    </div>
+
   </div>
-</div>
 </body>
 
 </html>

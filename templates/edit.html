@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Edit Todo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <style>
+  .submit_form{
+    text-align: center;
+    padding: 3%;
+    background: DarkOrange;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4),
+                0 6px 20px 0 rgba(0,0,0,0.36);
+  }
+  </style>
+</head>
+
+<body class="container-fluid">
+
+  <center class="row">
+    <h1><i>Topshiriqni tahrirlash</i></h1>
+    <hr />
+  </center>
+
+  <div class="row">
+    <div class="col-md-4"></div>
+    
+    <div class="col-md-4">
+      {% if message %}
+      <div class="alert alert-danger">
+        <strong>Xato!</strong> {{message}}
+      </div>
+      {% endif %}
+
+      {% if todo %}
+      <div class="submit_form">
+        <form action="/edit/{{todo.id}}/" method="post">{% csrf_token %}
+          <label for="">Title</label>
+          <input type="text" name="title" value="{{todo.title}}" placeholder="Title kiriting" class="form-control" required>
+          <br />
+          <label for="">Desc</label>
+          <textarea name="description" class="form-control" required>{{todo.desc}}</textarea>
+          <br />
+          <label for="">Status</label><br>
+          <select name="status" class="form-control" required>
+            <option value="new" {% if todo.status == 'new' %}selected{% endif %}>New</option>
+            <option value="in_progress" {% if todo.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+            <option value="done" {% if todo.status == 'done' %}selected{% endif %}>Done</option>
+          </select>
+          <br />
+          <br>
+          <center>
+            <button type="submit" class="btn btn-success">Saqlash</button>
+            <a href="/" class="btn btn-default">Bekor qilish</a>
+          </center>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+    
+    <div class="col-md-4"></div>
+  </div>
+
+</body>
+</html>
