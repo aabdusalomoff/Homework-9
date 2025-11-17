@@ -1,68 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo Detail</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <style>
-        .detail_card {
-            padding: 3%;
-            background: DarkOrange;
-            border-radius: 25px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4),
-                0 6px 20px 0 rgba(0, 0, 0, 0.36);
-        }
-    </style>
 </head>
+<body>
+    <h1>Topshiriq tafsilotlari</h1>
+    
+    {% if message %}
+    <p>{{message}}</p>
+    <a href="/">Asosiy sahifaga qaytish</a>
+    {% endif %}
 
-<body class="container-fluid">
-
-    <center class="row">
-        <h1><i>Topshiriq tafsilotlari</i></h1>
-        <hr />
-    </center>
-
-    <div class="row">
-        <div class="col-md-3"></div>
-
-        <div class="col-md-6">
-            {% if message %}
-            <div class="alert alert-danger">
-                <strong>Xato!</strong> {{message}}
-            </div>
-            <center>
-                <a href="/" class="btn btn-default">Asosiy sahifaga qaytish</a>
-            </center>
-            {% endif %}
-
-            {% if todo %}
-            <div class="detail_card">
-                <h2><b>{{ todo.title }}</b></h2>
-                <hr />
-                <h4><b>Description:</b></h4>
-                <p>{{ todo.desc }}</p>
-                <hr />
-                <h4><b>Status:</b></h4>
-                <p>{{ todo.get_status_display }}</p>
-                <hr />
-                <h4><b>Created at:</b></h4>
-                <p>{{ todo.created_at|date:"d-m-Y H:i" }}</p>
-                <br />
-                <center>
-                    <a href="/" class="btn btn-default">Orqaga</a>
-                </center>
-            </div>
-            {% endif %}
-        </div>
-
-        <div class="col-md-3"></div>
-    </div>
-
+    {% if todo %}
+    <h2>{{ todo.title }}</h2>
+    <p><strong>Title:</strong> {{ todo.desc }}</p>
+    <p><strong>Status:</strong> {{ todo.get_status_display }}</p>
+    <p><strong>Created at:</strong> {{ todo.created_at|date:"d-m-Y H:i" }}</p>
+    <a href="/">Orqaga</a>
+    {% endif %}
 </body>
-
 </html>
